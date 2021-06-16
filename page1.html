@@ -1,0 +1,159 @@
+<style>
+    body {
+  
+      background-image: url("fish.gif");
+      image
+    }
+  
+    #container {
+      padding: 10%;
+    }
+  
+    #head {
+      font-family: monospace;
+      color: rgb(10, 1, 1);
+      bottom: -20%;
+      position: relative;
+      width: 15px;
+      height: 15px;
+      margin: 0 auto;
+      right: 2%;
+  
+    }
+    
+  
+    #black {
+      background-color: black;
+      color: white;
+      position: relative;
+      font-size: 30px;
+      
+    }
+
+    #bar {
+      text-align: center;
+      width: 95%;
+      height: 45px;
+      background-color: black;
+      margin: 0 auto;
+      font-family: monospace;
+      padding: auto;
+      float: none;
+      border-radius: 10px;
+    }
+  
+    #screen {
+  
+      background: #000;
+      width: 95%;
+      height: 600px;
+      border-radius: 2%;
+      margin: 0 auto;
+      padding: 1px;
+      opacity: 0.6;
+      overflow: scroll;
+    }
+  
+    .font {
+      color: #fff;
+      font-family: monospace;
+      font-size: 20px;
+      text-align: left;
+      position: static;
+    }
+  
+    #commandprompt {
+      float: left;
+      width: 30%;
+      color: #ffffff;
+      border: none;
+      opacity: inherit;
+      font-size: 20px;
+      vertical-align: middle;
+      box-sizing: border-box;
+      background-color: #000;
+    }
+  
+    #textBox {
+      width: auto;
+      color: #f2f3ed;
+      border: none;
+      box-sizing: border-box;
+      font-size: 20px;
+      vertical-align: middle;
+      background-color: #000;
+      opacity: inherit;
+    }
+  
+   
+    #injected {
+      padding-left: 10px;
+      font-size: 18px;
+      color: white;
+      text-align: justify;
+      margin-top: 5px;
+    }
+  
+    #injected ul {
+      list-style: none;
+    }
+  
+    #injected li,
+    th,
+    td {
+      padding-right: 45px;
+      padding-left: 25px;
+      padding-top: 7px;
+      text-align: left;
+    }
+  
+    #userInput {
+      margin-top: 20px;
+      padding: 10px;
+    }
+  </style>
+
+
+
+<script>
+ 
+    // Main Function
+    function commandProcessor(e) {
+  
+      //Check if the enter key is pressed
+      if (e.keyCode == 13) {
+  
+       
+        document.getElementById('injected').innerHTML = "";
+        var i = document.getElementById("textBox").value;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://192.168.0.107/cgi-bin/code1.py?x=" + i, false);
+        xhr.send();
+        var output = xhr.responseText;
+        document.getElementById("injected").innerHTML = output;
+  
+        //Clear input text box
+        document.getElementById('textBox').value = "";
+      }
+    }
+  
+  </script>
+  
+  
+  
+  <div id="container">
+  
+    <div id="bar">
+      <div id="black">Redhat Enterprise Linux</div>
+    </div>
+    <div id="screen">
+      <div id="userInput">
+        <input type="text" value="root@Lovely:~$" id="commandprompt" size="30" readonly="readonly">
+        <input type="text" id="textBox" onkeypress="commandProcessor(event)" placeholder="Enter the command" size="50"
+          autofocus>
+      </div>
+      <pre>
+      <div id="injected"></div>
+      </pre>
+    </div>
+  </div>
